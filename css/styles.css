@@ -1,0 +1,56 @@
+/* Basic reset and typography */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navigation styling */
+  nav {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  nav a {
+    color: white;
+    margin-right: 10px;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Page headers */
+  h1 {
+    padding: 20px;
+  }
+  
+  /* Container for music items */
+  #items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Card styling for each item */
+  .card {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .card {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+  
