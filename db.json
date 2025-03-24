@@ -1,0 +1,184 @@
+{
+  "musicItems": [
+    {
+      "id": 1,
+      "name": "Light My Fire",
+      "releaseDate": 19670424,
+      "rating": 9.5,
+      "mood": ["Energetic"],
+      "image": "light_my_fire.jpg",
+      "alt": "EP cover for Light My Fire"
+    },
+    {
+      "id": 2,
+      "name": "Break On Through",
+      "releaseDate": 19670101,
+      "rating": 7.8,
+      "mood": ["Energetic"],
+      "image": "break_on_through.jpg",
+      "alt": "Album cover for Break On Through"
+    },
+    {
+      "id": 3,
+      "name": "People Are Strange",
+      "releaseDate": 19670904,
+      "rating": 8.3,
+      "mood": ["Mellow"],
+      "image": "people_are_strange.jpg",
+      "alt": "Album cover for People Are Strange"
+    },
+    {
+      "id": 4,
+      "name": "Hello, I Love You",
+      "releaseDate": 19680611,
+      "rating": 8.0,
+      "mood": ["Poetic"],
+      "image": "hello_i_love_you.jpg",
+      "alt": "Album cover for Hello, I Love You"
+    },
+    {
+      "id": 5,
+      "name": "The End",
+      "releaseDate": 19670104,
+      "rating": 9.3,
+      "mood": ["Mellow", "Poetic", "Energetic"],
+      "image": "the_doors.jpg",
+      "alt": "Album cover for The End"
+    },
+    {
+      "id": 6,
+      "name": "Riders on the Storm",
+      "releaseDate": 19710601,
+      "rating": 7.8,
+      "mood": ["Mellow", "Poetic"],
+      "image": "riders_on_the_storm.jpg",
+      "alt": "Album cover for Riders on the Storm"
+    },
+    {
+      "id": 7,
+      "name": "Soul Kitchen",
+      "releaseDate": 19670104,
+      "rating": 8.5,
+      "mood": ["Poetic"],
+      "image": "soul_kitchen.jpg",
+      "alt": "Album cover for Soul Kitchen"
+    },
+    {
+      "id": 8,
+      "name": "Back Door Man",
+      "releaseDate": 19670104,
+      "rating": 9.3,
+      "mood": ["Energetic"],
+      "image": "back_door_man.jpg",
+      "alt": "Album cover for Back Door Man"
+    },
+    {
+      "id": 9,
+      "name": "Love Me Two Times",
+      "releaseDate": 19671101,
+      "rating": 9.1,
+      "mood": ["Poetic", "Energetic"],
+      "image": "love_me_two_times.jpg",
+      "alt": "Album cover for Love Me Two Times"
+    },
+    {
+      "id": 10,
+      "name": "Roadhouse Blues",
+      "releaseDate": 19700301,
+      "rating": 7.9,
+      "mood": ["Energetic"],
+      "image": "roadhouse_blues.jpg",
+      "alt": "Album cover for Roadhouse Blues"
+    },
+    {
+      "id": 11,
+      "name": "Peace Frog",
+      "releaseDate": 19700201,
+      "rating": 7.3,
+      "mood": ["Poetic", "Energetic"],
+      "image": "peace_frog.jpg",
+      "alt": "Album cover for Peace Frog"
+    },
+    {
+      "id": 12,
+      "name": "When the Music's Over",
+      "releaseDate": 19670925,
+      "rating": 7.4,
+      "mood": ["Mellow", "Poetic"],
+      "image": "when_the_musics_over.jpg",
+      "alt": "Album cover for When the Music's Over"
+    },
+    {
+      "id": 13,
+      "name": "The Crystal Ship",
+      "releaseDate": 19670401,
+      "rating": 7.0,
+      "mood": ["Poetic"],
+      "image": "the_doors.jpg",
+      "alt": "Album cover for The Crystal Ship"
+    },
+    {
+      "id": 14,
+      "name": "Moonlight Drive",
+      "releaseDate": 19671101,
+      "rating": 8.4,
+      "mood": ["Mellow", "Poetic"],
+      "image": "moonlight_drive.jpg (todo)",
+      "alt": "Album cover for Moonlight Drive"
+    },
+    {
+      "id": 15,
+      "name": "L.A. Woman",
+      "releaseDate": 19710419,
+      "rating": 9.2,
+      "mood": ["Energetic", "Poetic"],
+      "image": "la_woman.jpg (todo)",
+      "alt": "Album cover for L.A. Woman"
+    },
+    {
+      "id": 16,
+      "name": "Queen of the Highway",
+      "releaseDate": 19701101,
+      "rating": 7.5,
+      "mood": ["Mellow"],
+      "image": "queen_of_the_highway.jpg (todo)",
+      "alt": "Album cover for Queen of the Highway"
+    },
+    {
+      "id": 17,
+      "name": "An American Prayer",
+      "releaseDate": 19781117,
+      "rating": 8.6,
+      "mood": ["Poetic"],
+      "image": "american_prayer.jpg",
+      "alt": "Album cover for An American Prayer"
+    },
+    {
+      "id": 18,
+      "name": "Touch Me",
+      "releaseDate": 19681201,
+      "rating": 8.0,
+      "mood": ["Energetic"],
+      "image": "touch_me.jpg (todo)",
+      "alt": "Album cover for Touch Me"
+    },
+    {
+      "id": 19,
+      "name": "Wishful Sinful",
+      "releaseDate": 19690301,
+      "rating": 9.4,
+      "mood": ["Poetic"],
+      "image": "wishful_sinful.jpg (todo)",
+      "alt": "Album cover for Wishful Sinful"
+    },
+    {
+      "id": 20,
+      "name": "Tell All the People",
+      "releaseDate": 19690301,
+      "rating": 7.2,
+      "mood": ["Poetic"],
+      "image": "tell_all_the_people.jpg (todo)",
+      "alt": "Album cover for Tell All the People"
+    }
+  ]
+}

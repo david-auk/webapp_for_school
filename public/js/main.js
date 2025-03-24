@@ -1,26 +1,33 @@
-// Variable for items per page
+// Global settings for pagination and filtering/sorting
+let currentPage = 1;
+let totalPages = 1;
+let currentSortType = 'releaseDate';
+let currentSortOrder = 'asc';
+let currentFilterMood = 'all';
 const itemsPerPage = 5;
 
-// Current page initialization
-let currentPage = 1;
+// Fetch items from the backend with query parameters
+function fetchItems() {
+  fetch(`/api/musicItems?sortType=${currentSortType}&sortOrder=${currentSortOrder}&filterMood=${currentFilterMood}&page=${currentPage}&limit=${itemsPerPage}`)
+    .then(response => response.json())
+    .then(data => {
+      totalPages = data.totalPages;
+      renderItems(data.items);
+      updatePagination();
+      updateTitle();
+    })
+    .catch(err => console.error("Error fetching items:", err));
+}
 
-// Create a working copy of musicItems to allow modifications (sorting/filtering)
-let currentItems = [...musicItems];
-
-// Function to render items for the current page
-function renderItems() {
+// Render items into the container
+function renderItems(items) {
   const container = document.getElementById('items-container');
   container.innerHTML = '';
 
-  // Calculate start and end index for pagination
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToShow = currentItems.slice(startIndex, endIndex);
-
-  itemsToShow.forEach(item => {
+  items.forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
-    
+
     // Format release date (YYYY-MM-DD)
     const dateStr = item.releaseDate.toString();
     const formattedDate = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
@@ -34,26 +41,21 @@ function renderItems() {
     `;
     container.appendChild(card);
   });
-
-  updatePagination();
-  updateTitle();
 }
 
-// Function to update pagination controls
+// Update pagination controls
 function updatePagination() {
   const paginationContainer = document.getElementById('pagination');
   paginationContainer.innerHTML = '';
 
-  const totalPages = Math.ceil(currentItems.length / itemsPerPage);
-
-  // Previous Button
+  // Prev button
   const prevButton = document.createElement('button');
   prevButton.textContent = 'Prev';
   prevButton.disabled = currentPage === 1;
   prevButton.addEventListener('click', () => {
     if (currentPage > 1) {
       currentPage--;
-      renderItems();
+      fetchItems();
     }
   });
   paginationContainer.appendChild(prevButton);
@@ -62,24 +64,22 @@ function updatePagination() {
   for (let i = 1; i <= totalPages; i++) {
     const pageButton = document.createElement('button');
     pageButton.textContent = i;
-    if (i === currentPage) {
-      pageButton.disabled = true;
-    }
+    pageButton.disabled = i === currentPage;
     pageButton.addEventListener('click', () => {
       currentPage = i;
-      renderItems();
+      fetchItems();
     });
     paginationContainer.appendChild(pageButton);
   }
 
-  // Next Button
+  // Next button
   const nextButton = document.createElement('button');
   nextButton.textContent = 'Next';
   nextButton.disabled = currentPage === totalPages;
   nextButton.addEventListener('click', () => {
     if (currentPage < totalPages) {
       currentPage++;
-      renderItems();
+      fetchItems();
     }
   });
   paginationContainer.appendChild(nextButton);
@@ -90,41 +90,26 @@ function updateTitle() {
   document.title = `Music - Page ${currentPage}`;
 }
 
-// Unified sorting function based on selected type and order
-function applySorting() {
-  const sortType = document.getElementById('sort-type').value;
-  const sortOrder = document.getElementById('sort-order').value;
-
-  currentItems.sort((a, b) => {
-    let comparison = 0;
-    if (sortType === 'releaseDate') {
-      comparison = a.releaseDate - b.releaseDate;
-    } else if (sortType === 'rating') {
-      comparison = a.rating - b.rating;
-    }
-    return sortOrder === 'asc' ? comparison : -comparison;
-  });
-
+// Update sorting based on dropdown selections
+function updateSorting() {
+  currentSortType = document.getElementById('sort-type').value;
+  currentSortOrder = document.getElementById('sort-order').value;
   currentPage = 1;
-  renderItems();
+  fetchItems();
 }
 
-// Event listeners for the sorting dropdowns
-document.getElementById('sort-type').addEventListener('change', applySorting);
-document.getElementById('sort-order').addEventListener('change', applySorting);
+// Event listeners for sorting dropdowns
+document.getElementById('sort-type').addEventListener('change', updateSorting);
+document.getElementById('sort-order').addEventListener('change', updateSorting);
 
-// Filtering by Mood
+// Filtering by mood
 document.getElementById('filter-mood').addEventListener('change', (e) => {
-  const selectedMood = e.target.value;
-  if (selectedMood === 'all') {
-    currentItems = [...musicItems];
-  } else {
-    currentItems = musicItems.filter(item => item.mood.includes(selectedMood));
-  }
-  applySorting(); // Apply sorting on the filtered results
+  currentFilterMood = e.target.value;
+  currentPage = 1;
+  fetchItems();
 });
 
-// Add new item functionality
+// Add new item functionality (POST to backend)
 document.getElementById('add-item-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('item-name').value;
@@ -134,15 +119,22 @@ document.getElementById('add-item-form').addEventListener('submit', (e) => {
   const mood = moodInput.split(',').map(s => s.trim());
   const image = document.getElementById('item-image').value;
   const alt = document.getElementById('item-alt').value;
-
+  
   const newItem = { name, releaseDate, rating, mood, image, alt };
 
-  musicItems.push(newItem);
-  currentItems = [...musicItems];
-  e.target.reset();
-  applySorting();
+  fetch('/api/musicItems', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newItem)
+  })
+    .then(response => response.json())
+    .then(item => {
+      // Optionally, reset the form and refresh the list
+      document.getElementById('add-item-form').reset();
+      fetchItems();
+    })
+    .catch(err => console.error("Error adding item:", err));
 });
 
-// Initial render on page load
-renderItems();
-applySorting();
+// Initial fetch on page load
+fetchItems();
