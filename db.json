@@ -227,17 +227,6 @@
       ],
       "image": "american_prayer.jpg",
       "alt": "Album cover for An American Prayer"
-    },
-    {
-      "id": 1742909537357,
-      "name": "test",
-      "releaseDate": 19670104,
-      "rating": 8.8,
-      "mood": [
-        "Mellow"
-      ],
-      "image": "1742909537351-775571169.png",
-      "alt": "test_image"
     }
   ]
 }
