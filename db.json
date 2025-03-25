@@ -36,17 +36,6 @@
       "alt": "Album cover for Soul Kitchen"
     },
     {
-      "id": 8,
-      "name": "Back Door Man",
-      "releaseDate": 19670104,
-      "rating": 9.3,
-      "mood": [
-        "Energetic"
-      ],
-      "image": "back_door_man.jpg",
-      "alt": "Album cover for Back Door Man"
-    },
-    {
       "id": 13,
       "name": "The Crystal Ship",
       "releaseDate": 19670401,
@@ -56,17 +45,6 @@
       ],
       "image": "the_doors.jpg",
       "alt": "Album cover for The Crystal Ship"
-    },
-    {
-      "id": 1,
-      "name": "Light My Fire",
-      "releaseDate": 19670424,
-      "rating": 9.5,
-      "mood": [
-        "Energetic"
-      ],
-      "image": "light_my_fire.jpg",
-      "alt": "EP cover for Light My Fire"
     },
     {
       "id": 3,

@@ -29,7 +29,29 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// GET /api/musicItems endpoint with filtering, sorting, and pagination
+// POST /api/musicItems - Add new item with image upload - Create
+app.post("/api/musicItems", upload.single("image"), (req, res) => {
+  const { name, releaseDate, rating, mood, alt } = req.body;
+
+  if (!req.file) {
+    return res.status(400).json({ error: "Image file is required" });
+  }
+  
+  const newItem = {
+    id: Date.now(),
+    name,
+    releaseDate: parseInt(releaseDate, 10),
+    rating: parseFloat(rating),
+    mood: mood.split(",").map(m => m.trim()),
+    image: req.file.filename, // Save filename to db.json
+    alt
+  };
+  
+  db.get("musicItems").push(newItem).write();
+  res.status(201).json(newItem);
+});
+
+// GET /api/musicItems endpoint with filtering, sorting, and pagination - Read
 app.get("/api/musicItems", (req, res) => {
   let items = db.get("musicItems").value();
 
@@ -60,26 +82,42 @@ app.get("/api/musicItems", (req, res) => {
   });
 });
 
-// POST /api/musicItems - Add new item with image upload
-app.post("/api/musicItems", upload.single("image"), (req, res) => {
-  const { name, releaseDate, rating, mood, alt } = req.body;
+// PUT /api/musicItems/:id - Update an existing item
+app.put("/api/musicItems/:id", (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+  
+  const item = db.get("musicItems").find({ id: parseInt(id) });
+  
+  if (!item.value()) {
+    return res.status(404).json({ error: "Item not found" });
+  }
+  
+  item.assign(updatedData).write();
+  res.json(item.value());
+});
+  
+// DELETE /api/musicItems/:id - Remove an item and its image
+app.delete("/api/musicItems/:id", (req, res) => {
+  const { id } = req.params;
+  const item = db.get("musicItems").find({ id: parseInt(id) }).value();
 
-  if (!req.file) {
-    return res.status(400).json({ error: "Image file is required" });
+  if (!item) {
+    return res.status(404).json({ error: "Item not found" });
   }
 
-  const newItem = {
-    id: Date.now(),
-    name,
-    releaseDate: parseInt(releaseDate, 10),
-    rating: parseFloat(rating),
-    mood: mood.split(",").map(m => m.trim()),
-    image: req.file.filename, // Save filename to db.json
-    alt
-  };
+  // Remove associated image file
+  if (item.image) {
+    const imagePath = path.join(__dirname, "public/images", item.image);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+  }
 
-  db.get("musicItems").push(newItem).write();
-  res.status(201).json(newItem);
+  // Remove item from database
+  db.get("musicItems").remove({ id: parseInt(id) }).write();
+
+  res.json({ message: "Item and its image deleted successfully" });
 });
 
 const PORT = 5001;
