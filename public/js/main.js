@@ -109,31 +109,36 @@ document.getElementById('filter-mood').addEventListener('change', (e) => {
   fetchItems();
 });
 
-// Add new item functionality (POST to backend)
-document.getElementById('add-item-form').addEventListener('submit', (e) => {
+document.getElementById('add-item-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const name = document.getElementById('item-name').value;
-  const releaseDate = parseInt(document.getElementById('item-release').value, 10);
-  const rating = parseFloat(document.getElementById('item-rating').value);
-  const moodInput = document.getElementById('item-mood').value;
-  const mood = moodInput.split(',').map(s => s.trim());
-  const image = document.getElementById('item-image').value;
-  const alt = document.getElementById('item-alt').value;
   
-  const newItem = { name, releaseDate, rating, mood, image, alt };
+  const formData = new FormData();
+  formData.append('name', document.getElementById('item-name').value);
+  formData.append('releaseDate', document.getElementById('item-release').value);
+  formData.append('rating', document.getElementById('item-rating').value);
+  formData.append('mood', document.getElementById('item-mood').value);
+  formData.append('image', document.getElementById('item-image').files[0]);
+  formData.append('alt', document.getElementById('item-alt').value);
 
-  fetch('/api/musicItems', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newItem)
-  })
-    .then(response => response.json())
-    .then(item => {
-      // Optionally, reset the form and refresh the list
-      document.getElementById('add-item-form').reset();
-      fetchItems();
+  try {
+    const response = await fetch('/api/musicItems', {
+      method: 'POST',
+      //headers: { 'Content-Type': 'application/json' },
+      body: formData
     })
-    .catch(err => console.error("Error adding item:", err));
+
+    if (!response.ok) throw new Error('Failed to upload');
+
+    const data = await response.json();
+    console.log('Success:', data);
+    document.getElementById('add-item-form').reset(); // Reset the form
+
+    fetchItems(); // Refresh the list
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+  e.target.reset();
 });
 
 // Initial fetch on page load

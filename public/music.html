@@ -47,15 +47,15 @@
   <!-- Form to add new items -->
   <div id="add-item">
     <h2>Add a New Item</h2>
-    <form id="add-item-form">
+    <form id="add-item-form" enctype="multipart/form-data">
       <input type="text" id="item-name" placeholder="Name" required>
       <input type="number" id="item-release" placeholder="Release Date (YYYYMMDD)" required>
       <input type="number" id="item-rating" placeholder="Rating (1-10)" step="0.1" required>
       <input type="text" id="item-mood" placeholder="Mood (comma separated)" required>
-      <input type="text" id="item-image" placeholder="Image filename (in images folder)" required>
+      <input type="file" id="item-image" accept="image/*" required>
       <input type="text" id="item-alt" placeholder="Alt text" required>
       <button type="submit">Add Item</button>
-    </form>
+    </form>    
   </div>
 
   <!-- Include the updated main JavaScript file -->
